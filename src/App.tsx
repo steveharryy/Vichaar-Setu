@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "next-themes";
 import { ClerkProvider } from "@clerk/clerk-react";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Index from "./pages/Index";
@@ -52,58 +53,51 @@ const App = () =>{
   routerPush={(to) => navigate(to)}
   routerReplace={(to) => navigate(to, { replace: true })}
 >
-
-
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-         
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <TooltipProvider>
               <Toaster />
               <Sonner />
-            
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/explore" element={<Explore />} />
-                  <Route path="/startup/:id" element={<StartupDetail />} />
-                  <Route path="/submit" element={<Submit />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/featured" element={<Featured />} />
-                  <Route path="/categories" element={<Categories />} />
-                  <Route path="/categories/:slug" element={<Categories />} />
-                  <Route path="/search" element={<Explore />} />
-                  <Route path="/auth" element={<Auth />} />
-<Route path="/auth/callback" element={<AuthCallback />} />
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/explore" element={<Explore />} />
+                <Route path="/startup/:id" element={<StartupDetail />} />
+                <Route path="/submit" element={<Submit />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/featured" element={<Featured />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/categories/:slug" element={<Categories />} />
+                <Route path="/search" element={<Explore />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/auth/callback" element={<AuthCallback />} />
 
+                <Route
+                  path="/student-dashboard"
+                  element={
+                    <ProtectedRoute role="student">
+                      <StudentDashboard />
+                    </ProtectedRoute>
+                  }
+                />
 
+                <Route
+                  path="/investor-dashboard"
+                  element={
+                    <ProtectedRoute role="investor">
+                      <InvestorDashboard />
+                    </ProtectedRoute>
+                  }
+                />
 
-                  <Route
-                    path="/student-dashboard"
-                    element={
-                      <ProtectedRoute role="student">
-                        <StudentDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  <Route
-                    path="/investor-dashboard"
-                    element={
-                      <ProtectedRoute role="investor">
-                        <InvestorDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-
-
-                  <Route path="/about" element={<About />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              
+                <Route path="/about" element={<About />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
             </TooltipProvider>
-       
-        </ThemeProvider>
-      </QueryClientProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </AuthProvider>
     </ClerkProvider>
   ) : (
     <MissingClerkKey />
