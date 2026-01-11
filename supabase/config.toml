@@ -1,0 +1,7 @@
+project_id = "owmdpkvhmcnfrkstkzzf"
+
+[functions.sync-clerk-role]
+verify_jwt = false
+
+[functions.database]
+verify_jwt = false
