@@ -1,0 +1,68 @@
+
+> vite_react_shadcn_ts@0.0.0 lint
+> eslint .
+
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\startup\StartupCard.tsx
+  2:19  warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\badge.tsx
+  29:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\button.tsx
+  56:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\calendar.tsx
+  45:25  warning  '_props' is defined but never used  @typescript-eslint/no-unused-vars
+  46:26  warning  '_props' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\chart.tsx
+  62:55  warning  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\command.tsx
+  24:11  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\form.tsx
+  129:10  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\navigation-menu.tsx
+  120:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\sidebar.tsx
+  636:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\sonner.tsx
+  27:19  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\textarea.tsx
+  5:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\components\ui\toggle.tsx
+  37:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\contexts\AuthContext.tsx
+  17:14  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\hooks\use-toast.ts
+  15:7  warning  'actionTypes' is assigned a value but only used as a type  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\pages\About.tsx
+  5:65  warning  'Globe' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\pages\Featured.tsx
+  2:24  warning  'Loader2' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\pages\StudentDashboard.tsx
+  128:17  warning  'clerkUserId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\src\pages\Submit.tsx
+  5:11  warning  'LinkIcon' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\supabase\functions\sync-role\index.ts
+  41:35  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Dell\Downloads\forge-your-idea-main\forge-your-idea-main\tailwind.config.ts
+  121:13  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+G£û 21 problems (3 errors, 18 warnings)
+
