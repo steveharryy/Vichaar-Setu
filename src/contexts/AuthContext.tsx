@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, ReactNode, useEffect, useState, useCallback } from "react";
+
 import { useUser, useAuth as useClerkAuth } from "@clerk/clerk-react";
 import { createOrUpdateUser } from "@/lib/database";
 import { syncClerkUserToSupabase } from "@/lib/supabase-db";
