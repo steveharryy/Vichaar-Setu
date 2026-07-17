@@ -12,6 +12,8 @@ import ChatPanel from '@/components/chat/ChatPanel';
 import InvestorMatchPanel from '@/components/investor/InvestorMatchPanel';
 import InvestorPreferencesDialog from '@/components/investor/InvestorPreferencesDialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import SmartSearch from '@/components/investor/SmartSearch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Switch } from '@/components/ui/switch';
@@ -580,6 +582,22 @@ const InvestorDashboard = () => {
           ))}
         </div>
 
+        <Tabs defaultValue="explore" className="space-y-6">
+          <div className="flex justify-center mb-2">
+            <TabsList className="glass-card p-1 w-full max-w-md grid grid-cols-2">
+              <TabsTrigger value="explore" className="font-display font-medium text-sm py-2">
+                <Rocket className="h-4 w-4 mr-2" />
+                Explore Projects
+              </TabsTrigger>
+              <TabsTrigger value="smart-search" className="font-display font-medium text-sm py-2">
+                <Sparkles className="h-4 w-4 mr-2" />
+                Smart AI Search
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          <TabsContent value="explore" className="space-y-6 animate-in fade-in-50 duration-200">
+
         {/* Search & Filters */}
         <Card className="glass-card p-4 mb-8">
           <div className="flex flex-col md:flex-row gap-4">
@@ -812,6 +830,12 @@ const InvestorDashboard = () => {
             })}
           </div>
         )}
+          </TabsContent>
+
+          <TabsContent value="smart-search" className="space-y-6 animate-in fade-in-50 duration-200">
+            <SmartSearch />
+          </TabsContent>
+        </Tabs>
       </main>
 
       {/* Contact Dialog */}

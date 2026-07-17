@@ -8,12 +8,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables first
 load_dotenv(dotenv_path="../.env")
+
+# Import RAG subsystem modules
+from rag import RAGService, SearchRequest, IngestRequest
 GEMINI_API_KEY = os.getenv("VITE_GEMINI_API_KEY")
 HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
 
 app = FastAPI(title="Vichaar Setu AI Co-Pilot")
+
+# Initialize RAG orchestrator service
+rag_service = RAGService()
 
 app.add_middleware(
     CORSMiddleware,
@@ -60,7 +66,7 @@ def call_gemini_rest(prompt: str):
         raise ValueError("Missing Gemini API Key")
     
     # Authorized models for this key (Prioritizing proven working ones)
-    models_to_try = ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-pro-latest", "gemini-pro"]
+    models_to_try = ["gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-flash-latest"]
     last_error = ""
 
     for model_name in models_to_try:
@@ -241,6 +247,43 @@ Respond ONLY with valid JSON in this exact structure:
         print(f"Investor matching error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+# ─── RAG Pipeline REST APIs ──────────────────────────────────────────────────
+
+@app.post("/api/rag/ingest")
+async def rag_ingest_project(req: IngestRequest):
+    """Index a single project by generating its embeddings and metadata."""
+    res = rag_service.ingest(req.project_id)
+    if not res.success:
+        raise HTTPException(status_code=500, detail=res.message)
+    return res
+
+@app.post("/api/rag/search")
+async def rag_search_projects(req: SearchRequest):
+    """Semantic vector search + keyword search combined with Gemini analysis."""
+    try:
+        return rag_service.search(req)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/rag/reindex")
+async def rag_reindex_all():
+    """Bulk reindex all published projects in the database."""
+    return rag_service.reindex()
+
+@app.delete("/api/rag/project/{project_id}")
+async def rag_delete_project(project_id: str):
+    """Delete a project's embeddings from the database."""
+    success = rag_service.delete(project_id)
+    if not success:
+        raise HTTPException(status_code=500, detail="Failed to delete project embedding")
+    return {"success": True, "project_id": project_id}
+
+@app.get("/api/rag/health")
+async def rag_health_check():
+    """Check status of RAG vector table and embedding provider connection."""
+    return rag_service.health()
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8001, reload=True)
+

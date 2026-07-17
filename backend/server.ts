@@ -7,6 +7,7 @@ import generatePitchHandler from './api/generate-pitch';
 import predictSuccessHandler from './api/predict-success';
 import dbHandler from './api/db';
 import investorMatchHandler from './api/investor-match';
+import ragHandler from './api/rag';
 
 const app = express();
 
@@ -62,6 +63,15 @@ app.post('/api/investor-match', async (req, res) => {
     await investorMatchHandler(req, res);
   } catch (error) {
     console.error('Error in investor-match handler:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.all(/^\/api\/rag(\/.*)?$/, async (req, res) => {
+  try {
+    await ragHandler(req, res);
+  } catch (error) {
+    console.error('Error in RAG proxy handler:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

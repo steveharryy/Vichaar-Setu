@@ -304,7 +304,72 @@ export async function findInvestorMatches(project_id: string): Promise<{ project
   return result;
 }
 
+// ========== RAG Semantic Search ==========
+export interface RagSearchFilters {
+  category?: string;
+  min_funding?: number;
+  max_funding?: number;
+  tech_stack?: string;
+  match_threshold?: number;
+  match_count?: number;
+}
+
+export interface RagProjectMatch {
+  project_id: string;
+  title: string;
+  tagline: string;
+  category: string;
+  tech_stack: string[];
+  funding_goal: number;
+  founder_name: string;
+  similarity: number;
+  content: string;
+}
+
+export interface RagSearchResponse {
+  answer: string;
+  matched_projects: RagProjectMatch[];
+  total_matches: number;
+  latency_ms: number;
+  query: string;
+}
+
+export async function ragSearch(
+  query: string,
+  filters?: RagSearchFilters
+): Promise<RagSearchResponse> {
+  const response = await fetch(`${API_URL}/api/rag/search`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query, filters }),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Smart Search failed');
+  }
+
+  return result;
+}
+
+export async function ragReindex(): Promise<{ success: boolean; total_indexed: number; failed: number; message: string }> {
+  const response = await fetch(`${API_URL}/api/rag/reindex`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Reindexing failed');
+  }
+
+  return result;
+}
+
 // ========== Initialize Database ==========
 export async function initDatabase(): Promise<void> {
   await dbQuery("initDatabase", {});
 }
+
